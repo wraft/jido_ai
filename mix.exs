@@ -12,10 +12,10 @@ defmodule JidoAi.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
+      name: "Jido AI",
       description: "Jido Actions and Workflows for interacting with LLMs",
       package: package(),
       docs: docs(),
-      name: "Jido Ai",
       source_url: @source_url
     ]
   end
@@ -30,8 +30,11 @@ defmodule JidoAi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jido, path: "../jido"},
-      {:instructor, github: "thmsmlr/instructor_ex"},
+      {:ecto, "~> 3.12"},
+      {:jido, "~> 1.0.0-rc.3"},
+      # Hex does not yet have a release of `instructor` that supports the `Instructor.Adapters.Anthropic` adapter.
+      {:instructor, github: "thmsmlr/instructor_ex", branch: "main"},
+      {:langchain, "~> 0.3.0-rc.1"},
 
       # Testing
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
@@ -47,7 +50,7 @@ defmodule JidoAi.MixProject do
 
   defp package do
     [
-      files: ["lib", "mix.exs", "README.md", "LICENSE"],
+      files: ["lib", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Mike Hostetler"],
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => @source_url}

@@ -4,11 +4,16 @@ Jido AI is an extension of the Jido framework for building AI Agents and Workflo
 
 ## Installation
 
+> **Note:** You must install `instructor` from GitHub until a new version is released. Hex does not yet have a release of `instructor` that supports the `Instructor.Adapters.Anthropic` adapter.
+
 ```elixir
 def deps do
   [
     {:jido, "~> 1.0.0"},
-    {:jido_ai, "~> 1.0.0"}
+    {:jido_ai, "~> 1.0.0"},
+
+    # Must install from github until a new version is released
+    {:instructor, github: "thmsmlr/instructor_ex"}
   ]
 end
 ```
