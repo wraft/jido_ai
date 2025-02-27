@@ -121,3 +121,67 @@ The example demonstrates how JidoAi can:
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/jido_ai>.
+
+## LLM Keyring
+
+The Jido.AI application includes a Keyring system that manages API keys for various LLM providers. The Keyring is a singleton GenServer that helps to manage LLM keys for convenience, not for security.
+
+### Key Sources
+
+Keys are loaded with the following priority:
+
+1. Environment variables (highest priority)
+2. Application environment
+3. Default values (lowest priority)
+
+### Session-based Keys
+
+Keys can also be set on a per-session (per-process) basis. This allows different parts of your application to use different API keys without affecting other processes.
+
+### Usage
+
+```elixir
+# Get a key (checks session keys first, then environment keys)
+api_key = Jido.AI.Keyring.get_key(:anthropic)
+
+# Get only the environment-level key
+env_key = Jido.AI.Keyring.get_env_key(:anthropic)
+
+# Set a session-specific key (only affects the current process)
+Jido.AI.Keyring.set_session_key(:anthropic, "my_session_key")
+
+# Clear a session key
+Jido.AI.Keyring.clear_session_key(:anthropic)
+
+# Clear all session keys for the current process
+Jido.AI.Keyring.clear_all_session_keys()
+
+# Check if a key is valid (non-nil and non-empty)
+Jido.AI.Keyring.has_valid_key?(api_key)
+
+# Test if a key is valid by making an API request
+Jido.AI.Keyring.test_key(:anthropic, api_key)
+```
+
+### Configuration
+
+You can configure keys in your `config.exs` file:
+
+```elixir
+config :jido_ai, :instructor,
+  anthropic: [
+    api_key: "your_anthropic_key"
+  ]
+
+config :jido_ai, :openai,
+  api_key: "your_openai_key"
+```
+
+Or using environment variables:
+
+```
+ANTHROPIC_API_KEY=your_anthropic_key
+OPENAI_API_KEY=your_openai_key
+```
+
+Environment variables take precedence over application configuration.
