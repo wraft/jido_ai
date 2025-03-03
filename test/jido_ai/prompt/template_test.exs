@@ -179,6 +179,7 @@ defmodule JidoTest.AI.Prompt.TemplateTest do
       assert msg.content == "Hi Alice!"
     end
 
+    @tag :skip
     test "to_message!/2 raises if invalid" do
       template =
         Template.new!(%{

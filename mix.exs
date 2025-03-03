@@ -62,7 +62,7 @@ defmodule Jido.Ai.MixProject do
       {:langchain, "~> 0.3.1"},
 
       # Testing
-      {:credo, "~> 1.7"},
+      {:credo, "~> 1.7", only: [:dev, :test]},
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:doctor, "~> 0.22.0", only: [:dev, :test]},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false},
@@ -85,7 +85,7 @@ defmodule Jido.Ai.MixProject do
     else
       deps ++
         [
-          {:jido, github: "agentjido/jido"}
+          {:jido, github: "agentjido/jido", branch: "main"}
           # {:jido_memory, github: "agentjido/jido_memory"}
         ]
     end
@@ -124,7 +124,7 @@ defmodule Jido.Ai.MixProject do
       source_url: @source_url,
       extras: [
         "README.md",
-        "guides/getting-started.md",
+        "guides/getting-started.md"
       ]
     ]
   end
