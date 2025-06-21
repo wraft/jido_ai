@@ -121,7 +121,6 @@ defmodule Jido.AI.Actions.Instructor do
       %{
         top_p: nil,
         stop: nil,
-        stream: false,
         partial: false,
         max_retries: 0,
         temperature: 0.7,
@@ -159,12 +158,12 @@ defmodule Jido.AI.Actions.Instructor do
         response_model: get_response_model(params_with_defaults),
         temperature: params_with_defaults.temperature,
         max_tokens: params_with_defaults.max_tokens,
-        max_retries: params_with_defaults.max_retries,
-        stream: params_with_defaults.stream
+        max_retries: params_with_defaults.max_retries
       ]
       |> add_if_present(:top_p, params_with_defaults.top_p)
       |> add_if_present(:stop, params_with_defaults.stop)
       |> add_if_present(:mode, params_with_defaults.mode)
+      |> add_if_present(:stream, Map.get(params_with_defaults, :stream))
 
     # IO.inspect(opts, label: "Instructor opts")
     # IO.inspect(config, label: "Instructor config")
@@ -273,6 +272,15 @@ defmodule Jido.AI.Actions.Instructor do
       openai: [
         api_key: api_key,
         api_url: "https://api.together.xyz"
+      ]
+    ]
+  end
+
+  defp get_instructor_config(%Model{provider: :google, api_key: api_key}) do
+    [
+      adapter: Instructor.Adapters.Gemini,
+      openai: [
+        api_key: api_key
       ]
     ]
   end
