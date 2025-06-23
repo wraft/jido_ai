@@ -279,9 +279,7 @@ defmodule Jido.AI.Actions.Instructor do
   defp get_instructor_config(%Model{provider: :google, api_key: api_key}) do
     [
       adapter: Instructor.Adapters.Gemini,
-      openai: [
-        api_key: api_key
-      ]
+      api_key: api_key
     ]
   end
 
